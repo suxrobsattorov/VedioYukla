@@ -65,7 +65,20 @@ public class MyBot extends TelegramLongPollingBot {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (text.equals("📽️ You Tube")) {
+            } else if (text.equals("📽️ Linkedin")) {
+                try {
+                    updatephoto(user, new File("E:/JAVA_darslari/JAVA/Amaliy/test/src/main/resources/linkedin.jpeg"),
+                            "Linkedin linkini tashlang!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Repository.message.put(update.getMessage().getChatId().toString(), text);
+                try {
+                    sendMsg(welcomeController.linkedin(update, text));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if (text.equals("📽️ You Tube")) {
                 try {
                     updatephoto(user, new File("E:/JAVA_darslari/JAVA/Amaliy/test/src/main/resources/YouTube-Logo.jpg"),
                             "Tou Tube linkini tashlang!");
@@ -82,11 +95,17 @@ public class MyBot extends TelegramLongPollingBot {
                     }
                 } else if (Repository.message.get(update.getMessage().getChatId().toString()).equals("📽️ Tik Tok")) {
                     try {
-                        sendMsg(welcomeController.youTubeMusic(update, text));
+                        sendMsg(welcomeController.tiktok(update, text));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else if (Repository.message.get(update.getMessage().getChatId().toString()).equals("📽️ You Tube")) {
+                } else if (Repository.message.get(update.getMessage().getChatId().toString()).equals("📽️ Linkedin")) {
+                    try {
+                        sendMsg(welcomeController.linkedin(update, text));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else if (Repository.message.get(update.getMessage().getChatId().toString()).equals("📽️ You Tube")) {
                     try {
                         sendMsg(welcomeController.youTubeVideo(update, text));
                     } catch (IOException e) {
@@ -117,6 +136,7 @@ public class MyBot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboardRowList = ReplayKeyboardUtil.rowlist(
                 ReplayKeyboardUtil.row(ReplayKeyboardUtil.button("📽️ Instagram")),
                 ReplayKeyboardUtil.row(ReplayKeyboardUtil.button("📽️ Tik Tok")),
+                ReplayKeyboardUtil.row(ReplayKeyboardUtil.button("📽️ Linkedin")),
                 ReplayKeyboardUtil.row(ReplayKeyboardUtil.button("📽️ You Tube"))
         );
         ReplyKeyboardMarkup markup = ReplayKeyboardUtil.keyboard(keyboardRowList);
@@ -153,11 +173,11 @@ public class MyBot extends TelegramLongPollingBot {
 
 
     public String getBotUsername() {
-        return "";
+        return "t.me/suxrobinstagramdownload_bot";
     }
 
     public String getBotToken() {
-        return "";
+        return "5103826439:AAECpJUNFj12zbFgFGPwzxzJpUiVRGwiJF8";
     }
 }
 

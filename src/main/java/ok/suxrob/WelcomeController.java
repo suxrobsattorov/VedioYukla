@@ -2,11 +2,10 @@ package ok.suxrob;
 
 import com.google.gson.Gson;
 import ok.suxrob.Instagram.DTO;
+import ok.suxrob.Linkedin.LinkedinDTO;
 import ok.suxrob.TikTok.TikTokDTO;
 import ok.suxrob.YouTube.YouTubeDTO;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -130,6 +129,39 @@ public class WelcomeController {
         sendMessage.setChatId(update.getMessage().getChatId().toString());
         sendMessage.setParseMode("html");
         sendMessage.setText("<a href = \"" + dto.getVideo()[0] + "\n" + dto.getMusic()[0] + "\"> video </a>");
+        return sendMessage;
+    }
+
+
+    public SendMessage linkedin(Update update, String linc) throws IOException {
+        SendMessage sendMessage = new SendMessage();
+
+        String[] d = linc.split("/");
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = new FormBody.Builder()
+                .add("url", "https://www.linkedin.com/posts/" + d[4] + "utm_source=linkedin_share&utm_medium=member_desktop_web")
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://linkedin-video-downloader.p.rapidapi.com/")
+                .post(body)
+                .addHeader("content-type", "application/x-www-form-urlencoded")
+                .addHeader("X-RapidAPI-Host", "linkedin-video-downloader.p.rapidapi.com")
+                .addHeader("X-RapidAPI-Key", "978175f32fmshd0828de0c3f6991p1e9ab9jsn4f0b1d0203d0")
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        String json = response.body().string();
+        Gson gson = new Gson();
+        LinkedinDTO dto = gson.fromJson(json, LinkedinDTO.class);
+
+
+        sendMessage.setChatId(update.getMessage().getChatId().toString());
+        sendMessage.setParseMode("html");
+        sendMessage.setText("<a href = \"" + dto.getResponse().getLinks().get(0).getUrl() + "\n" + "\"> video </a>");
         return sendMessage;
     }
 
