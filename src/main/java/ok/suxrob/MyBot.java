@@ -173,11 +173,11 @@ public class MyBot extends TelegramLongPollingBot {
 
 
     public String getBotUsername() {
-        return "t.me/suxrobinstagramdownload_bot";
+        return "t.me/";
     }
 
     public String getBotToken() {
-        return "5103826439:AAECpJUNFj12zbFgFGPwzxzJpUiVRGwiJF8";
+        return "";
     }
 }
 
